@@ -1,21 +1,41 @@
 import React from "react";
-
+import { useForm } from "react-hook-form";
 const YoutubeForm = () => {
+  //states 
+
+  const form = useForm()
+
+  const { name, onChange, onBlur, ref } = form.register()
   return (
     <div className="form-box">
+
       <form className="form">
-        <span className="title">Sign up</span>
-        <span className="subtitle">Create a free account with your email.</span>
+        <h1 className="title">Sign up</h1>
+
         <div className="form-container">
-          <input type="text" className="input" placeholder="Full Name" />
-          <input type="email" className="input" placeholder="Email" />
-          <input type="password" className="input" placeholder="Password" />
+
+          {/* <input type="text" className="input" placeholder="Full Name" 
+          name={name}
+          onChange={onChange}
+          onBlur={onBlur}
+          ref={ref}
+          /> */}
+          {/* simpler way to do it */}
+          <input type="text" className="input" placeholder="Full Name"
+            {...form.register("username")}
+          />
+          <input type="email" className="input" placeholder="Email" 
+          {...form.register("email")}
+          />
+
+          <input type="password" className="input" placeholder="Password" 
+          {...form.register("password")}
+          />
         </div>
+
         <button>Sign up</button>
       </form>
-      <div className="form-section">
-        <p>Have an account? <a href="">Log in</a> </p>
-      </div>
+
     </div>
 
   );
