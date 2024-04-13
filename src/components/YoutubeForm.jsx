@@ -8,11 +8,20 @@ const YoutubeForm = () => {
 
   // const { name, onChange, onBlur, ref } = form.register()
 
-  const { control } =form
+  const { control ,handleSubmit} =form
+
+  // functions to process the form
+  const onSubmit = (data) => {
+    console.log("data of form " , data)
+    console.log("username " , data.username)
+    console.log("email " , data.email)
+    console.log("password " , data.password)
+  }
+
   return (
     <div className="form-box">
 
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="title">Sign up</h1>
 
         <div className="form-container">
