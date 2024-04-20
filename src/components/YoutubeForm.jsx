@@ -4,37 +4,17 @@ import { DevTool } from "@hookform/devtools";
 const YoutubeForm = () => {
   //states 
 
-  const form = useForm({
-    // 1.give fields default values
-    // defaultValues:{
-    //   username:"",
-    //   email:"",
-    //   password:"",
-    // }
-
-    // 2.get data from api and set default values
-
-    defaultValues: async () => {
-      const response = await fetch("https://jsonplaceholder.typicode.com/users/1")
-      const data = await response.json()
-      return {
-        username: data.username,
-        email: data.email,
-        phone: data.phone,
-      }
-    }
-  })
+  const form = useForm()
 
   const { errors } = form.formState
 
-  // log errors to understand the object structure
-  console.log(errors)
+
 
   const { control, handleSubmit } = form
 
   // functions to process the form
   const onSubmit = (data) => {
-    console.log("clicked ")
+    console.log(data)
   }
 
   return (
@@ -105,6 +85,17 @@ const YoutubeForm = () => {
 
           }
         </div>
+
+        {/* NESTED OBJECT */}
+
+        <input type="text" className="input" placeholder="facebookLink"
+          {...form.register("socialLinks.facebookLink")}
+          />
+
+          {/* NESTED OBJECT */}
+        <input type="text" className="input" placeholder="twitterLink"
+          {...form.register("socialLinks.twitterLink")}
+        />
 
         <button>Sign up</button>
       </form>
