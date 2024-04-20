@@ -6,16 +6,16 @@ const YoutubeForm = () => {
 
   const form = useForm()
 
-  // const { name, onChange, onBlur, ref } = form.register()
+  const {errors} = form.formState
+
+  // log errors to understand the object structure
+  console.log(errors)
 
   const { control ,handleSubmit} =form
 
   // functions to process the form
   const onSubmit = (data) => {
-    console.log("data of form " , data)
-    console.log("username " , data.username)
-    console.log("email " , data.email)
-    console.log("password " , data.password)
+    console.log("clicked ")
   }
 
   return (
@@ -31,15 +31,13 @@ const YoutubeForm = () => {
 
           <input type="text" className="input" placeholder="Full Name"
             {...form.register("username",{
-              
-              // required:{
-              //   value:true,
-              //   message:"Please enter your name"
-              // }
-              // simpler way 
               required:"Please enter your name"
             })}
           />
+          {/* render error if exist for username  */}
+          {
+            errors.username?.message && <p className="error">{errors.username.message}</p>
+          }
 
           <input type="email" className="input" placeholder="Email" 
           {...form.register("email",{
@@ -50,17 +48,33 @@ const YoutubeForm = () => {
           })}
           />
 
+          {
+            /* render error if exist for email  */
+
+            errors.email?.message && <p className="error">{errors.email.message}</p>
+          }
+
           <input type="password" className="input" placeholder="Password" 
           {...form.register("password",{
-            minLength:8,
-            maxLength:16
+            minLength:{
+              value:6,
+              message:"Password must be at least 6 characters"
+            }
           })}
           />
+
+          {/* render error if exist for password */
+          
+          errors.password?.message && <p className="error">{errors.password.message}</p>
+          
+          }
         </div>
 
         <button>Sign up</button>
       </form>
+
           <DevTool control={control}/>
+
     </div>
 
   );
