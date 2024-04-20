@@ -31,9 +31,18 @@ const YoutubeForm = () => {
 
           <input type="text" className="input" placeholder="Full Name"
             {...form.register("username",{
-              required:"Please enter your name"
+              required:"Please enter your name",
+
+              // add you custom validation 
+              validate:{
+                // not write mohamded in username field input 
+
+                notMohamed:(value)=> value !== "mohamed" || "Mohamed is not allowed",
+
+              }
             })}
           />
+
           {/* render error if exist for username  */}
           {
             errors.username?.message && <p className="error">{errors.username.message}</p>
@@ -44,7 +53,15 @@ const YoutubeForm = () => {
             pattern:{
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
               message:"Invalid email address"
-            }
+            },
+
+            // add your custom validation 
+
+            // not write .org domain 
+          validate:{
+            notOrg :(value)=> !value.endsWith(".org") || " org domain not allowed"
+          }
+
           })}
           />
 
