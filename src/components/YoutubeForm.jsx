@@ -21,27 +21,40 @@ const YoutubeForm = () => {
   return (
     <div className="form-box">
 
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      {/* no validate to enable your custom validate */}
+
+      <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate> 
+
         <h1 className="title">Sign up</h1>
 
         <div className="form-container">
 
-          {/* <input type="text" className="input" placeholder="Full Name" 
-          name={name}
-          onChange={onChange}
-          onBlur={onBlur}
-          ref={ref}
-          /> */}
-          {/* simpler way to do it */}
           <input type="text" className="input" placeholder="Full Name"
-            {...form.register("username")}
+            {...form.register("username",{
+              
+              // required:{
+              //   value:true,
+              //   message:"Please enter your name"
+              // }
+              // simpler way 
+              required:"Please enter your name"
+            })}
           />
+
           <input type="email" className="input" placeholder="Email" 
-          {...form.register("email")}
+          {...form.register("email",{
+            pattern:{
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+              message:"Invalid email address"
+            }
+          })}
           />
 
           <input type="password" className="input" placeholder="Password" 
-          {...form.register("password")}
+          {...form.register("password",{
+            minLength:8,
+            maxLength:16
+          })}
           />
         </div>
 
