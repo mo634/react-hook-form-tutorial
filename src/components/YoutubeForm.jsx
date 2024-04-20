@@ -4,7 +4,13 @@ import { DevTool } from "@hookform/devtools";
 const YoutubeForm = () => {
   //states 
 
-  const form = useForm()
+  const form = useForm({
+
+    // need to initialize an array in form data"phoneNumber"
+    defaultValues:{
+      phoneNumber:["",""]
+    }
+  })
 
   const { errors } = form.formState
 
@@ -86,16 +92,16 @@ const YoutubeForm = () => {
           }
         </div>
 
-        {/* NESTED OBJECT */}
+        {/* add phone number arr field  */}
 
-        <input type="text" className="input" placeholder="facebookLink"
-          {...form.register("socialLinks.facebookLink")}
+        <input type="text" className="input" placeholder="phoneNumber"
+            {...form.register("phoneNumber.0")}
           />
 
-          {/* NESTED OBJECT */}
-        <input type="text" className="input" placeholder="twitterLink"
-          {...form.register("socialLinks.twitterLink")}
-        />
+        <input type="text" className="input" placeholder="Password"
+            {...form.register("phoneNumber.1")}
+          />
+        
 
         <button>Sign up</button>
       </form>
