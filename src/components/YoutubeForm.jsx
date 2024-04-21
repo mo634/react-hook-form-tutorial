@@ -11,8 +11,14 @@ const YoutubeForm = () => {
       password:123456
     }
   })
+  
+    // dirty : field is modified 
+    // touched : field is touched
 
-  const { errors } = form.formState
+  const { errors,touchedFields, dirtyFields , isDirty} = form.formState
+
+  console.log(touchedFields,dirtyFields)
+  console.log("is modified",isDirty)
 
 
 
