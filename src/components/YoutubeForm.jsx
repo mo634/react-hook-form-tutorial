@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 const YoutubeForm = () => {
@@ -16,7 +16,7 @@ const YoutubeForm = () => {
 
 
 
-  const { control, handleSubmit,watch } = form
+  const { control, handleSubmit,watch,getValues } = form
 
   // ***********************to watch all values ***********************
   // const formData   = watch() 
@@ -31,6 +31,24 @@ const YoutubeForm = () => {
   const onSubmit = (data) => {
     console.log(data)
   }
+
+  // functions to process the click btn 
+
+  // get values cannot trigger change "just when click"
+  const handleClick = () => {
+    console.log(getValues())
+    console.log(username)
+  }
+
+
+  // *********log changes in input field ************
+  useEffect(() => {
+    const subscribe = watch((data) => {
+      console.log(data)
+    })
+
+    return () => subscribe.unsubscribe()
+  }, [watch])
 
   return (
     <div className="form-box">
@@ -111,6 +129,8 @@ const YoutubeForm = () => {
 
 
         <button>Sign up</button>
+
+        <button onClick={handleClick}>clicke me </button>
       </form>
 
       <DevTool control={control} />
