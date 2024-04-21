@@ -16,7 +16,7 @@ const YoutubeForm = () => {
 
 
 
-  const { control, handleSubmit,watch,getValues } = form
+  const { control, handleSubmit,watch,setValue } = form
 
   // ***********************to watch all values ***********************
   // const formData   = watch() 
@@ -32,14 +32,28 @@ const YoutubeForm = () => {
     console.log(data)
   }
 
-  // functions to process the click btn 
 
-  // get values cannot trigger change "just when click"
-  const handleClick = () => {
-    console.log(getValues())
-    console.log(username)
+
+  const handleReset = () => {
+    // reset all only one value
+
+    // setValue("username","" ,{
+    //   // to reflect with  dev tool
+    //   shouldDirty: true,
+    //   shouldTouch: true,
+    //   shouldValidate: true
+    // })
+
+
+    // another way to reset "better to user "
+
+    // reset  value 
+    // form.reset({username: "",})
+    
+    // reset all values 
+    form.reset()
+
   }
-
 
   // *********log changes in input field ************
   useEffect(() => {
@@ -130,7 +144,9 @@ const YoutubeForm = () => {
 
         <button>Sign up</button>
 
-        <button onClick={handleClick}>clicke me </button>
+        <button
+        onClick={handleReset}
+        >Reset</button>
       </form>
 
       <DevTool control={control} />
