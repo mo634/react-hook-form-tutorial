@@ -4,14 +4,29 @@ import { DevTool } from "@hookform/devtools";
 const YoutubeForm = () => {
   //states 
 
-  const form = useForm()
+  const form = useForm({
+    defaultValues: {
+      username: "mohsen",
+      email:"mmm@gmail.com",
+      password:123456
+    }
+  })
 
   const { errors } = form.formState
 
 
 
-  const { control, handleSubmit } = form
+  const { control, handleSubmit,watch } = form
 
+  // ***********************to watch all values ***********************
+  // const formData   = watch() 
+
+  // to watch specific field 
+  // const uername = watch("username")
+
+  // watch specific fields
+  const {username,email,password} = watch()
+  
   // functions to process the form
   const onSubmit = (data) => {
     console.log(data)
@@ -19,6 +34,8 @@ const YoutubeForm = () => {
 
   return (
     <div className="form-box">
+      {/* <h1>{username}</h1> */}
+
 
       {/* no validate to enable your custom validate */}
 
@@ -29,7 +46,9 @@ const YoutubeForm = () => {
         <div className="form-container">
 
           <input type="text" className="input" placeholder="Full Name"
+          value={username}
             {...form.register("username", {
+            value: {},
               required: "Please enter your name",
 
               // add you custom validation 
@@ -48,7 +67,10 @@ const YoutubeForm = () => {
           }
 
           <input type="email" className="input" placeholder="Email"
+            
+            value={email}
             {...form.register("email", {
+
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                 message: "Invalid email address"
@@ -71,6 +93,7 @@ const YoutubeForm = () => {
           }
 
           <input type="password" className="input" placeholder="Password"
+          value={password}
             {...form.register("password", {
               minLength: {
                 value: 6,
@@ -86,30 +109,6 @@ const YoutubeForm = () => {
           }
         </div>
 
-        {/* add phone number arr field  */}
-
-        <input type="text" className="input" placeholder="phoneNumber"
-            {...form.register("phoneNumber.0")}
-          />
-
-        <input type="text" className="input" placeholder="Password"
-            {...form.register("phoneNumber.1")}
-          />
-        
-
-          {/* add your custom validation "only enter number in age" */}
-        <input type="number" className="input" placeholder="enter your age"
-            {...form.register("age",{
-              valueAsNumber: true
-            })}
-          />
-
-          {/* add your custom validation "enter the date type only" */}
-        <input type="date" className="input" 
-            {...form.register("date",{
-              valueAsDate: true
-            })}
-          />
 
         <button>Sign up</button>
       </form>
