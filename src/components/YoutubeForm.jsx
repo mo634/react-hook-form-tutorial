@@ -59,6 +59,9 @@ const YoutubeForm = () => {
 
   }
 
+  const onError = (errors) => {
+    console.log(errors)
+  }
   // *********log changes in input field ************
   useEffect(() => {
     const subscribe = watch((data) => {
@@ -75,7 +78,8 @@ const YoutubeForm = () => {
 
       {/* no validate to enable your custom validate */}
 
-      <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
+{/* handleSubmit : accept two funcs , "logic func  and Error func" */}
+      <form className="form" onSubmit={handleSubmit(onSubmit,onError)} noValidate>
 
         <h1 className="title">Sign up</h1>
 
@@ -106,7 +110,7 @@ const YoutubeForm = () => {
             
             value={email}
             {...form.register("email", {
-              // disable field while username is empty
+              // disable field while user
               disabled:watch("username") === "" ,
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
