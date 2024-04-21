@@ -4,13 +4,7 @@ import { DevTool } from "@hookform/devtools";
 const YoutubeForm = () => {
   //states 
 
-  const form = useForm({
-
-    // need to initialize an array in form data"phoneNumber"
-    defaultValues:{
-      phoneNumber:["",""]
-    }
-  })
+  const form = useForm()
 
   const { errors } = form.formState
 
@@ -102,6 +96,20 @@ const YoutubeForm = () => {
             {...form.register("phoneNumber.1")}
           />
         
+
+          {/* add your custom validation "only enter number in age" */}
+        <input type="number" className="input" placeholder="enter your age"
+            {...form.register("age",{
+              valueAsNumber: true
+            })}
+          />
+
+          {/* add your custom validation "enter the date type only" */}
+        <input type="date" className="input" 
+            {...form.register("date",{
+              valueAsDate: true
+            })}
+          />
 
         <button>Sign up</button>
       </form>
