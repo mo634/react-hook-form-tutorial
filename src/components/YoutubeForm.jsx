@@ -6,7 +6,7 @@ const YoutubeForm = () => {
 
   const form = useForm({
     defaultValues: {
-      username: "mohsen",
+      username: "",
       email:"mmm@gmail.com",
       password:123456
     }
@@ -15,10 +15,8 @@ const YoutubeForm = () => {
     // dirty : field is modified 
     // touched : field is touched
 
-  const { errors,touchedFields, dirtyFields , isDirty} = form.formState
+  const { errors} = form.formState
 
-  console.log(touchedFields,dirtyFields)
-  console.log("is modified",isDirty)
 
 
 
@@ -86,7 +84,7 @@ const YoutubeForm = () => {
           <input type="text" className="input" placeholder="Full Name"
           value={username}
             {...form.register("username", {
-            value: {},
+
               required: "Please enter your name",
 
               // add you custom validation 
@@ -108,7 +106,8 @@ const YoutubeForm = () => {
             
             value={email}
             {...form.register("email", {
-
+              // disable field while username is empty
+              disabled:watch("username") === "" ,
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                 message: "Invalid email address"
