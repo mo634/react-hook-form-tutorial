@@ -4,12 +4,19 @@ import { DevTool } from "@hookform/devtools";
 const YoutubeForm = () => {
   //states 
 
+  // ************modes ******************
+  //1. onChange => validate the fields  while typing 
+  //2. onBlur => validate the fields  when field is blured 
+  //3. onSubmit => validate the fields  when form is submitted "Default"
+  //4. onTouched => validate the fields  when field is touched 
+  //5. all => validate input field on both "change and bluer"
   const form = useForm({
     defaultValues: {
       username: "",
       email: "mmm@gmail.com",
       password: 123456
-    }
+    },
+    mode: "onChange"
   })
 
   // dirty : field is modified 
@@ -110,19 +117,6 @@ const YoutubeForm = () => {
 
             value={email}
             {...form.register("email", {
-              //  Async Validation 
-
-
-              validate:
-                {
-                  emailValidate: async (value) => {
-                    const res = await fetch(`https://jsonplaceholder.typicode.com/users?email=${value}`)
-
-                    const data = await res.json()
-
-                    return data.length == 0 || "Email already exist"
-                  }
-                }
             })}
           />
 
