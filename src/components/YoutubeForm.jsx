@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 // define schema for validation 
 
-const schema = yup.object({
-  // define fields and its validation 
-  username: yup.string().required("username is required"),
-  email: yup.string().email().required("email is required"),
-  password: yup.number().min(6).required("password is required")
-}
-)
+const schema = z.object({
+  // define fields to validate 
+  username: z.string().min(1, { message: "required" }).nonempty("username is required"),
+  email: z.string().email().nonempty("email is required"),
+  password: z.string().min(1, { message: "required" }).nonempty("password is required"),
+})
 const YoutubeForm = () => {
   //states 
 
@@ -23,7 +22,7 @@ const YoutubeForm = () => {
     },
 
     // link the schema to the form 
-    resolver: yupResolver(schema),
+    resolver: zodResolver(schema)
 
   })
 
