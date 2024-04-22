@@ -7,20 +7,20 @@ const YoutubeForm = () => {
   const form = useForm({
     defaultValues: {
       username: "",
-      email:"mmm@gmail.com",
-      password:123456
+      email: "mmm@gmail.com",
+      password: 123456
     }
   })
-  
-    // dirty : field is modified 
-    // touched : field is touched
 
-  const { errors} = form.formState
+  // dirty : field is modified 
+  // touched : field is touched
 
-
+  const { errors } = form.formState
 
 
-  const { control, handleSubmit,watch,setValue } = form
+
+
+  const { control, handleSubmit, watch, setValue } = form
 
   // ***********************to watch all values ***********************
   // const formData   = watch() 
@@ -29,8 +29,8 @@ const YoutubeForm = () => {
   // const uername = watch("username")
 
   // watch specific fields
-  const {username,email,password} = watch()
-  
+  const { username, email, password } = watch()
+
   // functions to process the form
   const onSubmit = (data) => {
     console.log(data)
@@ -53,7 +53,7 @@ const YoutubeForm = () => {
 
     // reset  value 
     // form.reset({username: "",})
-    
+
     // reset all values 
     form.reset()
 
@@ -78,15 +78,15 @@ const YoutubeForm = () => {
 
       {/* no validate to enable your custom validate */}
 
-{/* handleSubmit : accept two funcs , "logic func  and Error func" */}
-      <form className="form" onSubmit={handleSubmit(onSubmit,onError)} noValidate>
+      {/* handleSubmit : accept two funcs , "logic func  and Error func" */}
+      <form className="form" onSubmit={handleSubmit(onSubmit, onError)} noValidate>
 
         <h1 className="title">Sign up</h1>
 
         <div className="form-container">
 
           <input type="text" className="input" placeholder="Full Name"
-          value={username}
+            value={username}
             {...form.register("username", {
 
               required: "Please enter your name",
@@ -107,23 +107,22 @@ const YoutubeForm = () => {
           }
 
           <input type="email" className="input" placeholder="Email"
-            
+
             value={email}
             {...form.register("email", {
-              // disable field while user
-              disabled:watch("username") === "" ,
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                message: "Invalid email address"
-              },
+              //  Async Validation 
 
-              // add your custom validation 
 
-              // not write .org domain 
-              validate: {
-                notOrg: (value) => !value.endsWith(".org") || " org domain not allowed"
-              }
+              validate:
+                {
+                  emailValidate: async (value) => {
+                    const res = await fetch(`https://jsonplaceholder.typicode.com/users?email=${value}`)
 
+                    const data = await res.json()
+
+                    return data.length == 0 || "Email already exist"
+                  }
+                }
             })}
           />
 
@@ -134,7 +133,7 @@ const YoutubeForm = () => {
           }
 
           <input type="password" className="input" placeholder="Password"
-          value={password}
+            value={password}
             {...form.register("password", {
               minLength: {
                 value: 6,
@@ -154,7 +153,7 @@ const YoutubeForm = () => {
         <button>Sign up</button>
 
         <button
-        onClick={handleReset}
+          onClick={handleReset}
         >Reset</button>
       </form>
 
